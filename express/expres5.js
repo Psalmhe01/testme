@@ -1,5 +1,5 @@
 import express from "express";
-import cookieParser  from "cookie-parser";
+import cookieParser from "cookie-parser";
 
 var app = express();
 app.use(cookieParser()); //needed for cookies

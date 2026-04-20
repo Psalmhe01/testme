@@ -13,7 +13,9 @@ const app = express();
 // 1. Essential Middleware (Parsers and Statics should come before Routes)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 app.use(express.static("public"));
+
 
 // 2. Environment Validation
 if (!process.env.MONGODB_URL) {
