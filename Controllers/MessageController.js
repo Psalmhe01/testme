@@ -1,5 +1,6 @@
 import { Message } from "../Models/Message.js";
 import { Topic } from "../Models/Topic.js";
+import { User } from "../Models/User.js";
 import { eventBus } from "../others/events/eventBus.js";
 
 export const createMessage = async (req, res) => {
@@ -29,17 +30,24 @@ export const createMessage = async (req, res) => {
 export const getThread = async (req, res) => {
   try {
     const { topicId } = req.params;
-    const [topic, messages] = await Promise.all([
+    const userId = req.session.userId;
+    const [topic, messages, user] = await Promise.all([
       Topic.findById(topicId).lean(),
       Message.find({ topicId })
         .populate("userId", "username")
         .sort({ createdAt: -1 })
         .lean(),
+      User.findById(userId).select("subscribedTopics").lean(),
     ]);
 
     if (!topic) return res.status(404).send("Topic not found");
 
-    res.render("thread", { topicId, topic, messages });
+    res.render("thread", {
+      topicId,
+      topic,
+      messages,
+      subscribedTopics: user?.subscribedTopics || [],
+    });
   } catch (error) {
     res.status(500).send("Error getting thread");
   }
@@ -48,7 +56,10 @@ export const getThread = async (req, res) => {
 export const getDashboard = async (req, res) => {
   try {
     const userId = req.session.userId;
-    const topics = await Topic.find().populate("createdBy", "username").lean();
+    const [topics, user] = await Promise.all([
+      Topic.find().populate("createdBy", "username").lean(),
+      User.findById(userId).select("subscribedTopics").lean(),
+    ]);
 
     const topicsWithMessages = await Promise.all(
       topics.map(async (topic) => {
@@ -60,7 +71,11 @@ export const getDashboard = async (req, res) => {
         return { topic, messages };
       }),
     );
-    res.render("dashboard", { topicsWithMessages, userId });
+    res.render("dashboard", {
+      topicsWithMessages,
+      userId,
+      subscribedTopics: user?.subscribedTopics || [],
+    });
   } catch (error) {
     console.error("Dashboard Load Error:", error);
     res.status(500).send("Internal Server Error");

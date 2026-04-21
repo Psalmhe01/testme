@@ -36,7 +36,6 @@ export const loginUser = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
       return res.render("login", { error: "Invalid username or password!" });
-      res.redirect("/login");
     }
 
     req.session.userId = user._id;

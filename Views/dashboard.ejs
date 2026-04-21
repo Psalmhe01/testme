@@ -14,7 +14,7 @@
 
     
 
-    <% topicsWithMessages.forEach(item => { %>
+    <% topicsWithMessages.filter(item => subscribedTopics.some(subId => subId.toString() === item.topic._id.toString())).forEach(item => { %>
   <h2>
     <a href="/topics/<%= item.topic._id %>">
       <%= item.topic.title %>
@@ -27,7 +27,7 @@
     <ul>
       <% item.messages.forEach(msg => { %>
         <li>
-          <strong><%= msg.userId.username %></strong>:
+          <strong><%= msg.userId ? msg.userId.username : 'Deleted User' %></strong>:
           <%= msg.body %>
           <br />
           <small><%= new Date(msg.createdAt).toLocaleString() %></small>

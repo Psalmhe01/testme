@@ -2,10 +2,20 @@
     <h1><%= topic.title %></h1>
 </div>
 
-<form method="POST" action= "/topics/<%= topic._id %>/messages">
-    <textarea name="body" placeholder="Write a message here..." required></textarea>
-    <button type="submit" >Post message</button>
-</form>
+<% if (subscribedTopics.map(id => id.toString()).includes(topic._id.toString())) { %>
+                <form method="POST" action= "/topics/<%= topic._id %>/messages">
+                    <textarea name="body" placeholder="Write a message here..." required></textarea>
+                    <button type="submit" >Post message</button>
+                </form>
+                <form method="POST" action="/topics/<%= topic._id %>/unsubscribe">
+                    <button type="submit">Unsubscribe from topic</button>
+                </form>
+            <% } else { %>
+                <form method="POST" action="/topics/<%= topic._id %>/subscribe">
+                    <button type="submit">Subscribe to post</button>
+                </form>
+            <% } %>
+
 
 <ul>
     <% messages.forEach(msg => { %>
