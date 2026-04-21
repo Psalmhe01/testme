@@ -2,20 +2,26 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import path from "path";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 
 import DatabaseConnection from "./Models/DatabaseConnection.js";
-import indexRoutes from "./others/Routes/index.js";
+import dashboardRoutes from "./others/Routes/dashboard.js";
+import topicRoutes from "./others/Routes/topics.js";
+import messageRoutes from "./others/Routes/messages.js";
+
+import "./others/observers/appFeedUpdater.js";
 
 const app = express();
 
 // 1. Essential Middleware (Parsers and Statics should come before Routes)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+app.set("views", path.join(process.cwd(), "Views"));
+app.set("view engine", "ejs");
 
 // 2. Environment Validation
 if (!process.env.MONGODB_URL) {
@@ -38,7 +44,9 @@ app.use(
 );
 
 // 4. Routes
-app.use("/", indexRoutes);
+app.use("/", dashboardRoutes);
+app.use("/", topicRoutes);
+app.use("/", messageRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

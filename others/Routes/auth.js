@@ -1,8 +1,8 @@
-import express from "express";
-import AuthController from "../controllers\AuthController.js";
+import * as AuthController from "../../Controllers/AuthController.js";
 import { Router } from "express";
 
 const router = Router();
+
 router.get("/register", AuthController.showRegisterForm);
 router.get("/login", AuthController.showLoginForm);
 

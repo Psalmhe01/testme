@@ -1,0 +1,21 @@
+<div>
+    <h1><%= topic.title %></h1>
+</div>
+
+<form method="POST" action= "/topics/<%= topic._id %>/messages">
+    <textarea name="body" placeholder="Write a message here..." required></textarea>
+    <button type="submit" >Post message</button>
+</form>
+
+<ul>
+    <% messages.forEach(msg => { %>
+        <li>
+            <strong><%= msg.userId.username %></strong>
+            <%= msg.body %>
+            <br/>
+            <small><%= new Date(msg.createdAt).toLocaleString() %></small>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/dashboard" >Return to dashboard</a>

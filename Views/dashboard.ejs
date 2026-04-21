@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TopicHub</title>
+  </head>
+  <body>
+    <script src="/javascript/app.js"></script>
+    
+
+    <h1>Welcome to the App</h1>
+    <p>This is the main page.</p>
+
+    
+
+    <% topicsWithMessages.forEach(item => { %>
+  <h2>
+    <a href="/topics/<%= item.topic._id %>">
+      <%= item.topic.title %>
+    </a>
+  </h2>
+
+  <% if (item.messages.length === 0) { %>
+    <p>No messages yet</p>
+  <% } else { %>
+    <ul>
+      <% item.messages.forEach(msg => { %>
+        <li>
+          <strong><%= msg.userId.username %></strong>:
+          <%= msg.body %>
+          <br />
+          <small><%= new Date(msg.createdAt).toLocaleString() %></small>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <hr />
+<% }) %>
+
+<nav>
+      <a href="/topics">Check out topics</a>
+      <br />
+      <a href="/logout">Logout</a>
+      <br />
+</nav>
+    
+    
+  </body>
+</html>

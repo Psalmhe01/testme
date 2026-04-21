@@ -1,0 +1,32 @@
+<div>
+    <h1>Welcome to Topics!</h1>
+</div>
+
+<form method="POST" action="/topics">
+    <input type="text" name="title" placeholder="Title" required />
+    <input type="text" name="description" placeholder="Description" required />
+    <button type="submit">Create topic</button>
+</form>
+
+<ul>
+    <% topics.forEach(topic => { %>
+        <li>
+            <%= topic.title %> - <%= topic.description %>
+            <a href="/topics/<%= topic._id %>">Read</a>
+            <% if (subscribedTopics.map(id => id.toString()).includes(topic._id.toString())) { %>
+                <form method="POST" action="/topics/<%= topic._id %>/unsubscribe">
+                    <button type="submit">Unsubscribe</button>
+                </form>
+            <% } else { %>
+                <form method="POST" action="/topics/<%= topic._id %>/subscribe">
+                    <button type="submit">Subscribe</button>
+                </form>
+            <% } %>
+        </li>
+    <% }) %>
+</ul>
+
+<div>
+    <h1>     </h1>
+</div>
+<a href="/dashboard">Return to Dashboard</a>
