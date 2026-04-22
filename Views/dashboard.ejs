@@ -3,49 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TopicHub</title>
+    <title>TopicHub - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   </head>
   <body>
     <script src="/javascript/app.js"></script>
+
+    <section class="header">
+      <div class="logo-container">
+        <img src="/assets/logo.png" onclick="window.location.href='/'" alt="Logo"/>
+      </div>
+      <div class="navigations">
+        <a href="/dashboard">Home</a>
+        <a href="/topics">Topics</a>
+        <a href="#yourhub">Your Hub</a>
+      </div>
+      <button onclick="window.location.href='/logout'" class="logout-btn">Logout</button>
+    </section>
     
+    <section class="welcome">
+      <h1>Welcome to TopicHub</h1>
+      <h2>Connect, share, and discover together</h2>
+      <p>We are a vibrant social media community where 
+        you can subscribe to your favorite topics and dive 
+        into shared interests through organized hubs. 
+        Join us in Silicon Valley to explore content 
+        that aligns with your passions.
+      </p>
+        <button onclick="window.location.href='/topics'" class="topic-button">Explore topics</button>
+      <div class="welcome-imgs">
+        <img src="/assets/img1.jpg"/>
+        <img src="/assets/img2.jpg"/>
+        <img src="/assets/img3.jpg"/>
+        <img src="/assets/img4.jpg"/>
+      </div>
+    </section>
 
-    <h1>Welcome to the App</h1>
-    <p>This is the main page.</p>
+    <section class="topic-overview" id="yourhub">
+      <h2>Latest from your hub</h2>
+      <div class="card-container">
+        <% topicsWithMessages.filter(item => subscribedTopics.some(subId => subId.toString() === item.topic._id.toString())).forEach(item => { %>
+        
+          <div class="card">
+            <h3>
+              <a href="/topics/<%= item.topic._id %>">
+                <%= item.topic.title %>
+              </a>
+            </h3>
 
-    
+          <% if (item.messages.length === 0) { %>
+            <p>No messages yet</p>
+          <% } else { %>
+            
+              <% item.messages.forEach(msg => { %>
+                <div class="message">
+                  <strong>
+                    <%= msg.userId ? msg.userId.username : 'Deleted User' %>
+                  </strong>:
+                  <%= msg.body %>
+                  <br />
+                  <small>
+                    <%= new Date(msg.createdAt).toLocaleString() %>
+                  </small>
+                </div>
+              <% }) %>
+            
+          <% } %>
+            
+          </div>
+          <% }) %>
+       </div>
+    </section>
 
-    <% topicsWithMessages.filter(item => subscribedTopics.some(subId => subId.toString() === item.topic._id.toString())).forEach(item => { %>
-  <h2>
-    <a href="/topics/<%= item.topic._id %>">
-      <%= item.topic.title %>
-    </a>
-  </h2>
-
-  <% if (item.messages.length === 0) { %>
-    <p>No messages yet</p>
-  <% } else { %>
-    <ul>
-      <% item.messages.forEach(msg => { %>
-        <li>
-          <strong><%= msg.userId ? msg.userId.username : 'Deleted User' %></strong>:
-          <%= msg.body %>
-          <br />
-          <small><%= new Date(msg.createdAt).toLocaleString() %></small>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
-
-  <hr />
-<% }) %>
-
-<nav>
-      <a href="/topics">Check out topics</a>
-      <br />
-      <a href="/logout">Logout</a>
-      <br />
-</nav>
-    
+    <section class="footer">
+        <div class="logo-container">
+            <img src="/assets/logo.png" alt="logo" onclick="window.location.href='/'"/>
+        </div>
+        <small>© All rights reserved...perhaps</small>
+        <p>testmail@mail.com<br/>Hammond, LA</p>
+    </section>
     
   </body>
 </html>

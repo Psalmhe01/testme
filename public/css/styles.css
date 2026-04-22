@@ -1,0 +1,479 @@
+@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+/**global stuff**/
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  max-width: 100vw;
+  font-family: "Elms Sans", sans-serif;
+}
+
+body {
+  background-color: #122023;
+  color: #e8f7d7;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 40px;
+}
+
+section {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 100px;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 50px;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 30px;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 25px;
+  font-weight: 600;
+}
+p,
+strong {
+  font-size: 18px;
+}
+
+form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form button {
+  width: 300px;
+  margin-top: 10px;
+  text-align: center;
+  align-content: center;
+  display: inline-block;
+  background-color: #002a32;
+  color: #e8f7d7;
+  padding: 0.8rem 1.5rem;
+  border: solid 1px;
+  border-radius: 0px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #e8f7d7;
+  color: #002a32;
+}
+
+form input {
+  border-color: #122023;
+  text-decoration: #122023;
+  background-color: #e8f7d7;
+  border: solid 1px #122023;
+  height: 40px;
+  width: 300px;
+  padding-left: 5px;
+}
+
+form textarea {
+  text-decoration: #122023;
+  background-color: #e8f7d7;
+  border: solid 1px #122023;
+  border-radius: 0px;
+  height: 80px;
+  width: 300px;
+  padding-left: 5px;
+  resize: none;
+}
+
+/**************************************DASHBOARD*****************************************/
+/**Header section***/
+.header {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #002a32;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.566);
+}
+
+.logo-container {
+  height: fit-content;
+  width: 90px;
+}
+
+.logo-container img {
+  height: 100%;
+  width: 100%;
+}
+
+.navigations {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  justify-content: space-between;
+}
+
+.navigations a {
+  text-decoration: none;
+  color: #e8f7d7;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.navigations a:hover {
+  cursor: pointer;
+  background-color: #e8f7d728;
+}
+
+.logout-btn {
+  background-color: #5261596d;
+  color: #e8f7d7;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  height: 40px;
+  width: 100px;
+  transition: 0.1s;
+}
+
+.logout-btn:hover {
+  background-color: #e8f7d728;
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+/**welcome section**/
+.welcome {
+  text-align: center;
+  align-content: center;
+  margin-top: 100px;
+}
+
+.welcome p {
+  max-width: 800px;
+  justify-self: center;
+  line-height: 30px;
+}
+
+.topic-button {
+  margin: 50px;
+  background-color: #e8f7d7;
+  color: #002a32;
+  border: solid 2px #e8f7d7;
+  border-radius: 10px;
+  padding: 10px;
+  height: 50px;
+  width: 200px;
+  transition: 0.3s;
+}
+
+.topic-button:hover {
+  background-color: #122023;
+  color: #e8f7d7;
+  border: solid 2px #e8f7d7;
+  cursor: pointer;
+}
+
+.welcome-imgs {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome-imgs img {
+  width: calc(90vw / 4);
+  height: "fit-content";
+  border-radius: 10px;
+}
+
+.topic-overview {
+  align-items: center;
+  background-color: #002a32;
+  margin: 20px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 20px;
+  align-items: center;
+}
+
+.card {
+  background: #e8f7d7;
+  height: 300px;
+  overflow-y: auto;
+  max-height: 300px;
+  color: #526159;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #e8f7d77e;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card a {
+  color: #122023;
+  text-decoration: none;
+}
+
+.card a:hover {
+  cursor: pointer;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message strong {
+  color: #526159;
+  font-size: 30px;
+}
+
+.message small {
+  display: block;
+  color: #9dac98;
+  font-size: 12px;
+}
+
+/***********************************************Topics page**************************************************/
+/************intro section************/
+.topics-intro {
+  text-align: center;
+  margin: 20px;
+  margin-top: 100px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/****************create topic section********************/
+.create-topic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #a9d2b5;
+  color: #122023;
+}
+
+.create-topic label {
+  font-size: 10px;
+  font-weight: 300;
+}
+
+/************************topics list section************************************/
+
+.topics-list h3 {
+  text-align: center;
+}
+.topic-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 60vw;
+  align-items: center;
+  justify-self: center;
+}
+
+.topic-card {
+  background: none;
+  height: 200px;
+  overflow-y: auto;
+  max-height: 200px;
+  color: #a9d2b5;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: solid 0.5px #a9d2b5;
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.topic-card p {
+  color: #e8f7d7;
+  font-size: 15px;
+}
+
+.topic-card-btns {
+  display: flex;
+  direction: row;
+  gap: 10px;
+}
+
+.topic-card-btn {
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 600;
+  background-color: #002a32;
+  padding: 10px;
+  color: #e8f7d7;
+  border: solid 1px;
+  border-radius: 0px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.topic-card-btn:hover {
+  background-color: #e8f7d7;
+  color: #002a32;
+}
+
+/********************************Login page*******************************************/
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  margin-top: 50px;
+}
+
+.login div {
+  justify-items: center;
+}
+.login h2 {
+  font-weight: 700;
+}
+
+.login h3 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.login-card {
+  padding: 40px;
+  background-color: #a9d2b5cb;
+}
+
+.login-card a {
+  color: #e8f7d7;
+  text-decoration: underline;
+}
+
+.login-card a:hover {
+  cursor: pointer;
+}
+
+/********************************Thread Page Specifics********************************/
+
+
+.threads-intro {
+  text-align: center;
+  margin: 20px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+.create-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 95vw;
+  gap: 20px;
+  background-color: #002a32;
+  color: #9dac98;
+  justify-self: center;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 60vw;
+  justify-self: center;
+}
+
+.message-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 60vw;
+  justify-self: center;
+}
+
+.topics-list form button{
+  background-color: #9dac98;
+  color: #002a32;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.message-card {
+  border: solid 1px #e8f7d7;
+  height: 300px;
+  overflow-y: auto;
+  max-height: 300px;
+  color: #526159;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 0;
+  box-shadow: 0 2px 8px #e8f7d77e;
+  transition: transform 0.3s;
+  height: auto !important;
+  max-height: none !important;
+}
+
+
+/********************************Footer*************************************/
+.footer{
+  background-color: #002a32;
+  color: #e8f7d7;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+}
+
+.footer img{
+  width: 180px;
+  height: 100%;
+}
+
+.footer p{
+  text-align: right;
+}

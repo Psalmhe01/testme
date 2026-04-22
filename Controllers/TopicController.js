@@ -21,12 +21,6 @@ export const createTopic = async (req, res) => {
 
     res.redirect("/topics");
   } catch (error) {
-    if (error.code === 11000) {
-      return res.render("dashboard", {
-        error: "Topic already exists. Create new topic.",
-      });
-    }
-    // Re-fetch data to ensure the view has necessary variables on error
     const [topics, user] = await Promise.all([
       Topic.find().populate("createdBy", "username").lean(),
       User.findById(userId).select("subscribedTopics").lean(),
@@ -35,7 +29,7 @@ export const createTopic = async (req, res) => {
       topics,
       subscribedTopics: user?.subscribedTopics || [],
       userId,
-      error: error.message,
+      error: error.code === 11000 ? "Topic already exists." : error.message,
     });
   }
 };
@@ -85,7 +79,7 @@ export const unsubscribeFromTopic = async (req, res) => {
 };
 
 export const getAllTopics = async (req, res) => {
-    const userId = req.session.userId;
+  const userId = req.session.userId;
   try {
     // Fetch all topics and the current user's subscription list in parallel
     const [topics, user] = await Promise.all([
