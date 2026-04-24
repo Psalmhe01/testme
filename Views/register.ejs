@@ -17,6 +17,9 @@
         <h3>Please create a username and password to continue.</h3>
       </div>
       <div class="login-card">
+        <% if (error) { %>
+          <div class="error-message"><%= error %></div>
+        <% } %>
         <form method="POST" action="/register">
           <input type="text" name="username" placeholder="Username" required />
           <input

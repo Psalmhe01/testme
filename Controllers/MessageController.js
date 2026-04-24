@@ -42,11 +42,16 @@ export const getThread = async (req, res) => {
 
     if (!topic) return res.status(404).send("Topic not found");
 
+    // Increment timesAccessed when a topic thread is viewed
+    await Topic.findByIdAndUpdate(topicId, { $inc: { timesAccessed: 1 } });
+
     res.render("thread", {
       topicId,
       topic,
       messages,
       subscribedTopics: user?.subscribedTopics || [],
+      error: null,
+      username: user?.username || "",
     });
   } catch (error) {
     res.status(500).send("Error getting thread");
@@ -68,13 +73,15 @@ export const getDashboard = async (req, res) => {
           .limit(2)
           .populate("userId", "username")
           .lean();
-        return { topic, messages };
+        return { topic, messages, timesAccessed: topic.timesAccessed };
       }),
     );
     res.render("dashboard", {
       topicsWithMessages,
       userId,
       subscribedTopics: user?.subscribedTopics || [],
+      error: null,
+      username: user?.username || "",
     });
   } catch (error) {
     console.error("Dashboard Load Error:", error);

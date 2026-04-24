@@ -1,22 +1,30 @@
 import { Topic } from "../Models/Topic.js";
 import { User } from "../Models/User.js";
+import { eventBus } from "../others/events/eventBus.js";
 
 export const createTopic = async (req, res) => {
   if (!req.session.userId) return res.redirect("/login");
   const userId = req.session.userId;
+  const { title, description } = req.body;
   try {
-    const { title, description } = req.body;
-
     const topic = await Topic.create({
       title,
       description,
       createdBy: userId,
       subscribers: [userId], // Auto-subscribe the creator
+      timesAccessed: 1,
     });
 
     // Update the user's subscribedTopics list
     await User.findByIdAndUpdate(userId, {
       $push: { subscribedTopics: topic._id },
+    });
+
+    // Emit event so observers can react (e.g., global activity feed)
+    eventBus.emit("topicCreated", {
+      topicId: topic._id,
+      title,
+      createdBy: userId,
     });
 
     res.redirect("/topics");
@@ -30,6 +38,8 @@ export const createTopic = async (req, res) => {
       subscribedTopics: user?.subscribedTopics || [],
       userId,
       error: error.code === 11000 ? "Topic already exists." : error.message,
+      title,
+      description,
     });
   }
 };
@@ -91,9 +101,27 @@ export const getAllTopics = async (req, res) => {
       topics,
       subscribedTopics: user?.subscribedTopics || [],
       userId,
+      timesAccessed: topics.map((topic) => topic.timesAccessed),
+      error: null,
+      title: "",
+      description: "",
     });
   } catch (error) {
     console.error("Dashboard Load Error:", error);
     res.status(500).send("Internal Server Error");
+  }
+};
+
+export const updateTimesAccessed = async (req, res) => {
+  try {
+    const { topicId } = req.params;
+
+    const topicUpdate = await Topic.findByIdAndUpdate(topicId, {
+      $inc: { timesAccessed: 1 },
+    });
+    if (!topicUpdate) return res.status(404).send("Topic not found");
+    res.redirect(`/topics/${topicId}`);
+  } catch (error) {
+    res.status(500).send("Error updating times accessed");
   }
 };

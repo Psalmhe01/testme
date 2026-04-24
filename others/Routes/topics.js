@@ -11,10 +11,17 @@ router.post(
   authMiddleware,
   TopicController.subscribeToTopic,
 );
+
 router.post(
   "/topics/:topicId/unsubscribe",
   authMiddleware,
   TopicController.unsubscribeFromTopic,
+);
+
+router.post(
+  "/topics/:topicId/update-times-accessed",
+  authMiddleware,
+  TopicController.updateTimesAccessed,
 );
 
 export default router;

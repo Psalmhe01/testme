@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 /**global stuff**/
 * {
   margin: 0;
@@ -25,12 +25,12 @@ section {
 }
 
 h1 {
-  font-size: 100px;
+  font-size: clamp(2.5rem, 10vw, 90px);
   font-weight: 500;
 }
 
 h2 {
-  font-size: 50px;
+  font-size: clamp(2.5rem, 10vw, 50px);
   font-weight: 400;
 }
 
@@ -168,6 +168,10 @@ form textarea {
   margin-top: 100px;
 }
 
+.welcome h1 {
+  max-width: 100%; /* Ensure it respects parent width */
+}
+
 .welcome p {
   max-width: 800px;
   justify-self: center;
@@ -196,9 +200,10 @@ form textarea {
 .welcome-imgs {
   padding: 20px;
   display: flex;
+  justify-items: space-between;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: calc(9vw/3);
 }
 
 .welcome-imgs img {
@@ -217,9 +222,24 @@ form textarea {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+  width: auto;
   gap: 20px;
   align-items: center;
+}
+
+.title-views {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.views {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .card {
@@ -230,6 +250,7 @@ form textarea {
   color: #526159;
   padding: 15px;
   margin-bottom: 15px;
+  overflow-wrap: break-word;
   border-radius: 10px;
   box-shadow: 0 2px 8px #e8f7d77e;
   transition: transform 0.3s;
@@ -387,12 +408,21 @@ form textarea {
   text-decoration: underline;
 }
 
+.error-message {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  width: 300px;
+  text-align: center;
+}
+
 .login-card a:hover {
   cursor: pointer;
 }
 
 /********************************Thread Page Specifics********************************/
-
 
 .threads-intro {
   text-align: center;
@@ -434,7 +464,7 @@ form textarea {
   justify-self: center;
 }
 
-.topics-list form button{
+.topics-list form button {
   background-color: #9dac98;
   color: #002a32;
   border: none;
@@ -457,23 +487,23 @@ form textarea {
   max-height: none !important;
 }
 
-
 /********************************Footer*************************************/
-.footer{
+.footer {
   background-color: #002a32;
   color: #e8f7d7;
   padding: 20px;
-  display: flex;
+  display:flex;
   justify-content: space-between;
   align-items: center;
   height: 300px;
+  object-fit: contain;
 }
 
-.footer img{
+.footer img {
   width: 180px;
   height: 100%;
 }
 
-.footer p{
+.footer p {
   text-align: right;
 }

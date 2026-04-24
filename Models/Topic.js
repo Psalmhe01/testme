@@ -26,6 +26,10 @@ const topicSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  timesAccessed: {
+    type: Number,
+    default: 1,
+  },
 });
 
 export const Topic = mongoose.model("Topic", topicSchema, "Topics");

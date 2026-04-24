@@ -43,6 +43,13 @@ app.use(
   }),
 );
 
+// Global variables for templates to prevent "not defined" errors
+app.use((req, res, next) => {
+  res.locals.error = null;
+  res.locals.username = "";
+  next();
+});
+
 // 4. Routes
 app.use("/", dashboardRoutes);
 app.use("/", topicRoutes);
