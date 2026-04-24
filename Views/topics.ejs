@@ -46,7 +46,8 @@
             <% topics.forEach(topic => { %>
                 <div class="topic-card">
                     <div>
-                        <h4><%= topic.title %></h4> 
+                        <h4><%= topic.title %></h4>
+                        <small><%= topic.timesAccessed %> Views</small>
                         <p><%= topic.description %></p>
                     </div>
                     <% if (subscribedTopics.map(id => id.toString()).includes(topic._id.toString())) { %>
