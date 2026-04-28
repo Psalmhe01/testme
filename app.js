@@ -15,7 +15,6 @@ import "./others/observers/appFeedUpdater.js";
 
 const app = express();
 
-// 1. Essential Middleware (Parsers and Statics should come before Routes)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -23,13 +22,11 @@ app.use(express.static("public"));
 app.set("views", path.join(process.cwd(), "Views"));
 app.set("view engine", "ejs");
 
-// 2. Environment Validation
 if (!process.env.MONGODB_URL) {
   console.error("FATAL ERROR: MONGODB_URL is not defined in .env file.");
   process.exit(1);
 }
 
-// 3. Initialize Database
 DatabaseConnection.getInstance(process.env.MONGODB_URL);
 
 app.use(
@@ -43,14 +40,12 @@ app.use(
   }),
 );
 
-// Global variables for templates to prevent "not defined" errors
 app.use((req, res, next) => {
   res.locals.error = null;
   res.locals.username = "";
   next();
 });
 
-// 4. Routes
 app.use("/", dashboardRoutes);
 app.use("/", topicRoutes);
 app.use("/", messageRoutes);
